@@ -14,12 +14,12 @@ e = np.random.random((2,2)) <br>
 <br><br>
 
 <h3>2. 访问数组 (Array indexing)</h3>
-a = np.array([[1,2,3], [4,5,6], [7,8,9], [10, 11, 12]]) 
-b = np.array([0, 2, 0, 1]) 
-print(a[np.arange(4), b])  # Prints "[ 1  6  7 11]" 
-a[np.arange(4), b] += 10 
-print(a)  # prints "array([[11,  2,  3], 
-          #                [ 4,  5, 16],
-          #                [17,  8,  9],
-          #                [10, 21, 12]])
+a = np.array([[1,2,3], [4,5,6], [7,8,9], [10, 11, 12]]) <br>
+b = np.array([0, 2, 0, 1]) <br>
+print(a[np.arange(4), b])  # Prints "[ 1  6  7 11]"  <br>
+a[np.arange(4), b] += 10  <br>
+print(a)  # prints "array([[11,  2,  3],  <br>
+          #                [ 4,  5, 16],  <br>
+          #                [17,  8,  9],  <br>
+          #                [10, 21, 12]]) <br>
 bool_idx = (a > 2) # 根据a条件得到一个bool矩阵 <br>
