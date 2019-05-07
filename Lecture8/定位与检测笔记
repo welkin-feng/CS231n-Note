@@ -73,7 +73,7 @@ Localization and Detection
       3. 复杂的训练流程比较混乱.
 
 
-  2. fast R-CNN
+  2. Fast R-CNN
     1. 将高分辨率图像直接输入，并卷积得到第5层的特征图.
     2. 在特征图中使用RoI(Region of Interest) Pooling提取原图中每个Region Proposal对应的特征.
     3. 将提取出特征输入到全连接层，然后连接到一个分类网络和一个回归网络.
@@ -82,18 +82,18 @@ Localization and Detection
 	    对于高分辨率图像中通过Selective Search等算法得到的候选框，将其投影到卷积特征图中.
 	    对裁剪后的特征图进行分区，对每个分区使用最大池化，得到一个固定大小的新特征图.
 
-	  fast R-CNN 优点
+	  Fast R-CNN 优点
 	    1. 通过共享不同目标框的卷积特征的计算，解决了测试速度慢的问题.
 	    2. 同时训练所有部分.
 
-	  fast R-CNN 缺点
+	  Fast R-CNN 缺点
 	    瓶颈在于推荐区域(Region Proposal)的选取算法Selective Search，不能并行计算，消耗大量时间.
 
 
-  3. faster R-CNN
+  3. Faster R-CNN
     -在最后一个conv层后加入一个去区域推荐网络(Region Proposal Network, RPN)来替代额外的区域推荐算法，
      获取卷积层最末端的特征图，从中获得推荐区域.
-    -在RPN之后，使用RoI池化，其它与fast R-CNN一样.
+    -在RPN之后，使用RoI池化，其它与Fast R-CNN一样.
 
 	  Region Proposal Network(RPN, 区域推荐网络)
 	    -把卷积神经网络的最后一层特征图当做输入，然后将区域推荐网络添加到卷积神经网络之上.
@@ -107,10 +107,28 @@ Localization and Detection
 	    -使用n个卷积框(anchor box)对特征图进行卷积. 每个框对每一个区域分别进行卷积，每次产生一个评分来判断框内是否有检测目标，
 	     它还会输出4个回归坐标点，得到正确的框的位置.
 
-	  faster R-CNN 训练
+	  Faster R-CNN 训练
 	    将RPN整合到一个大网络中(即网络中有一个内置的区域推荐网络)，并产生4个损失值(loss).
 	    1. RPN classification (anchor good/bad)，表示推荐区域内是否包含一个检测目标.
 	    2. RPN regression (anchor -> proposal)，得到推荐区域框的坐标.
-	    根据RPN中得到的推荐区域位置，在特征图中进行RoI池化，然后做fast R-CNN中相同的工作.
+	    根据RPN中得到的推荐区域位置，在特征图中进行RoI池化，然后做Fast R-CNN中相同的工作.
 	    3. Fast R-CNN classification (over classes)，表示目标所属类别
 	    4. Fast R-CNN regression (proposal -> box)，获得正确的推荐区域
+
+
+	-将目标检测当做回归问题
+
+	YOLO
+		-将输入的图像划分成许多空间网格(通常是7x7的网格，网格大小随图像尺寸变化)
+		-对于每个网格中的元素，预测 B个边界框(B通常为2)的4个坐标+1个置信度 和 对于每个类别的评分
+
+		检测问题变成回归问题，即输入一张图片，会输出一个 7x7x(5xB + C)的张量. 对于回归问题，可以使用CNN训练.
+
+		YOLO 的问题
+			-它的模型输出是有上限的，如果测试数据和训练数据中有许多ground truth，就可能出现一些问题.
+
+		YOLO 优点
+			-速度非常快，比Faster R-CNN还快
+
+		YOLO 缺点
+			-检测效果并不是很好
