@@ -128,7 +128,7 @@ Localization and Detection
 			-它的模型输出是有上限的，如果测试数据和训练数据中有许多ground truth，就可能出现一些问题.
 
 		YOLO 优点
-			-速度非常快，比Faster R-CNN还快
+			-速度非常快，比Faster R-CNN还快，如果GPU不是很好，也可以使用YOLO获得不错的效果
 
 		YOLO 缺点
 			-检测效果并不是很好
