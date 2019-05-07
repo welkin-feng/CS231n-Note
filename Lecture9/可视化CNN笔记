@@ -2,3 +2,4 @@
 
 Understanding and Visualizing CNN
 
+选择第5层中的任一神经元，然后传递大量图片给它，看哪个图片最能激活该神经元
